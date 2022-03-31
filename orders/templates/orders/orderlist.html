@@ -1,0 +1,45 @@
+{% extends "orders/layout.html" %}
+
+{% load crispy_forms_tags %}
+{% block title %}
+Carrito de compras
+{% endblock %}
+
+{% block body %}
+<h2>Órdenes pendientes</h2>
+<ul>
+{% for order in pending_orders %}    
+    <li>
+        
+        {{order}} <a href="cancel/{{order.id}}">Cancelar orden</a> <a href="completed/{{order.id}}">Completar orden</a>
+    
+        <ul>
+            {% for orderitem in order.orderitem_set.all %}
+                <li>{{orderitem}}</li>
+            {% endfor %}
+        </ul></li>
+{% endfor %}
+</ul>
+<h2>Órdenes completadas</h2>
+<ul>
+{% for order in completed_orders %}
+    <li>{{order}}</li>
+    <ul>
+        {% for orderitem in order.orderitem_set.all %}
+            <li>{{orderitem}}</li>
+        {% endfor %}
+    </ul></li>
+{% endfor %}
+</ul>
+<h2>Órdenes canceladas</h2>
+<ul>
+{% for order in canceled_orders %}
+    <li>{{order}}</li>
+    <ul>
+        {% for orderitem in order.orderitem_set.all %}
+            <li>{{orderitem}}</li>
+        {% endfor %}
+    </ul></li>
+{% endfor %}
+</ul>
+{% endblock %}
